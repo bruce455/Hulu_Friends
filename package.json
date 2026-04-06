@@ -1,0 +1,30 @@
+{
+  "name": "hulu_friends",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bruce455/Hulu_Friends.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "bugs": {
+    "url": "https://github.com/bruce455/Hulu_Friends/issues"
+  },
+  "homepage": "https://github.com/bruce455/Hulu_Friends#readme",
+  "devDependencies": {
+    "vite": "^8.0.5"
+  },
+  "dependencies": {
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
+  }
+}
