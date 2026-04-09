@@ -1,68 +1,26 @@
-import React, { useState, useEffect } from "react";
+import { Routes, Route, Link } from "react-router-dom";
+import Home from "./Home";
+import Login from "./Login";
 import Signup from "./Signup";
+
 function App() {
-  const [query, setQuery] = useState("");
-  const [movies, setMovies] = useState([]);
-  const [loading, setLoading] = useState(false);
-
-  useEffect(() => {
-    if (!query) return; 
-
-    const url = `https://api.themoviedb.org/3/search/movie?query=${query}&include_adult=false&language=en-US&page=1`;
-
-    const options = {
-      method: "GET",
-      headers: {
-        accept: "application/json",
-        Authorization: "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJhZWQ0YTFmNWZmMjJhZDFkMTU5YzIwNzUwNDBkZDc3ZCIsIm5iZiI6MTc3NDQ3NjA3NC41ODA5OTk5LCJzdWIiOiI2OWM0NWIyYWVhMzZkMmJlNjQ0ZGRmNTkiLCJzY29wZXMiOlsiYXBpX3JlYWQiXSwidmVyc2lvbiI6MX0.78Z4MBVVFsI26KY_O69mekO1lN3qYN6mIVlodrNG3ss",
-      },
-    };
-
-    setLoading(true);
-
-    fetch(url, options)
-      .then((res) => res.json())
-      .then((json) => {
-        setMovies(json.results || []);
-        setLoading(false);
-      })
-      .catch((err) => {
-        console.error(err);
-        setLoading(false);
-      });
-  }, [query]); 
-
   return (
     <div>
-      <h1>Movie Search</h1>
-      <input
-        type="text"
-        placeholder="Search for a movie..."
-        value={query}
-        onChange={(e) => setQuery(e.target.value)}
-      />
+      {/* Navigation */}
+      <nav>
+        <Link to="/">Home</Link> |{" "}
+        <Link to="/login">Login</Link> |{" "}
+        <Link to="/signup">Signup</Link>
+      </nav>
 
-
-      {!loading && movies.length === 0 && query && <p>No results found.</p>}
-
-      <ul>
-        {movies.map((movie) => (
-          <li key={movie.id}>
-            <strong>{movie.title}</strong> ({movie.release_date})
-          </li>
-        ))}
-      </ul>
-      <Signup />
-      
+      {/* Routes */}
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/signup" element={<Signup />} />
+      </Routes>
     </div>
-    
   );
-
-
-
-  
 }
-
-
 
 export default App;
