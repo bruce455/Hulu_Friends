@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-
+import Signup from "./Signup";
 function App() {
   const [query, setQuery] = useState("");
   const [movies, setMovies] = useState([]);
@@ -52,8 +52,17 @@ function App() {
           </li>
         ))}
       </ul>
+      <Signup />
+      
     </div>
+    
   );
+
+
+
+  
 }
+
+
 
 export default App;

@@ -21,4 +21,21 @@ app.get("/watched", async (req, res) => {
   }
 });
 
+app.post("/signup", async (req, res) => {
+  const { email, password } = req.body;
+
+  try {
+    const result = await pool.query(
+      "INSERT INTO users (email, password) VALUES ($1, $2) RETURNING *",
+      [email, password]
+    );
+
+    res.json(result.rows[0]);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Error creating user");
+  }
+});
+
+
 app.listen(5000, () => console.log("Server running on port 5000"));
