@@ -10,7 +10,7 @@ function App() {
     <div>
       {/* Navigation */}
       <nav>
-        <Link to="/">Home</Link> |{" "}
+        <Link to="/home">Home</Link> |{" "}
         <Link to="/login">Login</Link> |{" "}
         <Link to="/signup">Signup</Link> |{" "}
         <Link to="/profile">Profile</Link> |{" "}
@@ -19,7 +19,8 @@ function App() {
 
       {/* Routes */}
       <Routes>
-        <Route path="/" element={<Home />} />
+        <Route path="/" element={<Login />} />
+        <Route path="/home" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/profile" element={<Profile />} />
