@@ -4,6 +4,8 @@ import Login from "./Login";
 import Signup from "./Signup";
 import Profile from "./Profile";
 import Friends from "./Friends";
+import MovieDetails from "./MovieDetails";
+
 
 function App() {
   return (
@@ -25,6 +27,7 @@ function App() {
         <Route path="/signup" element={<Signup />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/friends" element={<Friends />} />
+        <Route path="/movie" element={<MovieDetails />} />
       </Routes>
     </div>
   );

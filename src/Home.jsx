@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
-
+import { useNavigate } from "react-router-dom";
 function Home() {
   const [movies, setMovies] = useState([]);
   const [query, setQuery] = useState("");
   const [loading, setLoading] = useState(false);
-
+  const navigate = useNavigate();
   const API_OPTIONS = {
     method: "GET",
     headers: {
@@ -63,20 +63,17 @@ function Home() {
       {/* 🎥 Movie Grid */}
       <div style={{ display: "flex", flexWrap: "wrap", gap: "10px" }}>
         {movies.map((movie) => (
-          <div key={movie.id} style={{ width: "150px" }}>
+          <div
+            key={movie.id}
+            style={{ width: "150px", cursor: "pointer" }}
+            onClick={() => navigate("/movie", { state: movie })}
+          >
             <img
-              src={
-                movie.poster_path
-                  ? `https://image.tmdb.org/t/p/w200${movie.poster_path}`
-                  : "https://via.placeholder.com/200x300?text=No+Image"
-              }
+              src={`https://image.tmdb.org/t/p/w200${movie.poster_path}`}
               alt={movie.title}
               style={{ width: "100%" }}
             />
-            <p>
-              <strong>{movie.title}</strong>
-            </p>
-            <p>{movie.release_date}</p>
+            <p>{movie.title}</p>
           </div>
         ))}
       </div>
