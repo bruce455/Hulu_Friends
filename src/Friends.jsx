@@ -7,9 +7,7 @@ function Friends() {
 
   const user = JSON.parse(localStorage.getItem("user"));
 
-  // -------------------------
-  // LOAD FRIENDS
-  // -------------------------
+  
   const loadFriends = async () => {
     if (!user) return;
 
@@ -28,9 +26,7 @@ function Friends() {
     loadFriends();
   }, []);
 
-  // -------------------------
-  // SEARCH USERS
-  // -------------------------
+
   const handleSearch = async (e) => {
     const value = e.target.value;
     setSearch(value);
@@ -52,9 +48,7 @@ function Friends() {
     }
   };
 
-  // -------------------------
-  // ADD FRIEND
-  // -------------------------
+  
   const addFriend = async (friendId) => {
     try {
       await fetch("http://localhost:5000/friends", {
@@ -77,9 +71,7 @@ function Friends() {
     }
   };
 
-  // -------------------------
-  // REMOVE FRIEND
-  // -------------------------
+
   const removeFriend = async (friendId) => {
     try {
       await fetch("http://localhost:5000/friends", {
@@ -99,14 +91,11 @@ function Friends() {
     }
   };
 
-  // -------------------------
-  // UI
-  // -------------------------
+
   return (
     <div style={{ padding: "20px" }}>
       <h1>👥 Friends</h1>
 
-      {/* CURRENT FRIENDS */}
       <h2>Your Friends</h2>
 
       {friends.length === 0 && <p>No friends yet.</p>}
@@ -129,7 +118,7 @@ function Friends() {
         ))}
       </ul>
 
-      {/* SEARCH */}
+      
       <h2>Find Friends</h2>
 
       <input
@@ -143,7 +132,6 @@ function Friends() {
         }}
       />
 
-      {/* SEARCH RESULTS */}
       <div>
         {results.map((u) => (
           <div

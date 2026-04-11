@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { validation } from "./validation";
 
 function Signup() {
   const [email, setEmail] = useState("");
@@ -6,6 +7,14 @@ function Signup() {
 
   const handleSignup = async (e) => {
     e.preventDefault();
+
+    // ✅ VALIDATION GOES HERE
+    const error = validation(email, password);
+
+    if (error) {
+      alert(error);
+      return;
+    }
 
     const res = await fetch("http://localhost:5000/signup", {
       method: "POST",
