@@ -13,7 +13,7 @@ function Home() {
     },
   };
 
-  // 🔹 Fetch movies (trending OR search)
+  // this is to fetch the trending movies
   useEffect(() => {
     const fetchMovies = async () => {
       setLoading(true);
@@ -44,7 +44,7 @@ function Home() {
     <div>
       <h1>🎬 Movie App</h1>
 
-      {/* 🔍 Search */}
+      
       <input
         type="text"
         placeholder="Search for a movie..."
@@ -52,15 +52,15 @@ function Home() {
         onChange={(e) => setQuery(e.target.value)}
       />
 
-      {/* 🔄 Loading */}
+   
       {loading && <p>Loading...</p>}
 
-      {/* ❌ No results */}
+    
       {!loading && movies.length === 0 && query && (
         <p>No results found.</p>
       )}
 
-      {/* 🎥 Movie Grid */}
+    //will change with bootstrap cards
       <div style={{ display: "flex", flexWrap: "wrap", gap: "10px" }}>
         {movies.map((movie) => (
           <div

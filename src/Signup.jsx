@@ -8,7 +8,7 @@ function Signup() {
   const handleSignup = async (e) => {
     e.preventDefault();
 
-    // ✅ VALIDATION GOES HERE
+  
     const error = validation(email, password);
 
     if (error) {
