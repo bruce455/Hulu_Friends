@@ -1,32 +1,25 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 function Friends() {
   const [friends, setFriends] = useState([]);
   const [search, setSearch] = useState("");
   const [results, setResults] = useState([]);
 
+  const navigate = useNavigate();
   const user = JSON.parse(localStorage.getItem("user"));
 
-  
-  const loadFriends = async () => {
+  // Load current friends
+  useEffect(() => {
     if (!user) return;
 
-    try {
-      const res = await fetch(
-        `http://localhost:5000/friends/${user.id}`
-      );
-      const data = await res.json();
-      setFriends(data);
-    } catch (err) {
-      console.error("Error loading friends:", err);
-    }
-  };
-
-  useEffect(() => {
-    loadFriends();
+    fetch(`http://localhost:5000/friends/${user.id}`)
+      .then((res) => res.json())
+      .then((data) => setFriends(data))
+      .catch((err) => console.error(err));
   }, []);
 
-
+  // Search users
   const handleSearch = async (e) => {
     const value = e.target.value;
     setSearch(value);
@@ -48,71 +41,70 @@ function Friends() {
     }
   };
 
-  
+  // Add friend
   const addFriend = async (friendId) => {
-    try {
-      await fetch("http://localhost:5000/friends", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          user_id: user.id,
-          friend_id: friendId,
-        }),
-      });
+    await fetch("http://localhost:5000/friends", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        user_id: user.id,
+        friend_id: friendId,
+      }),
+    });
 
-      setResults([]);
-      setSearch("");
-
-      loadFriends();
-    } catch (err) {
-      console.error("Add friend error:", err);
-    }
+    // refresh friends
+    const res = await fetch(
+      `http://localhost:5000/friends/${user.id}`
+    );
+    const data = await res.json();
+    setFriends(data);
   };
 
-
+  //Remove friend
   const removeFriend = async (friendId) => {
-    try {
-      await fetch("http://localhost:5000/friends", {
-        method: "DELETE",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          user_id: user.id,
-          friend_id: friendId,
-        }),
-      });
+    await fetch("http://localhost:5000/friends", {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        user_id: user.id,
+        friend_id: friendId,
+      }),
+    });
 
-      loadFriends();
-    } catch (err) {
-      console.error("Remove friend error:", err);
-    }
+    // refresh friends
+    const res = await fetch(
+      `http://localhost:5000/friends/${user.id}`
+    );
+    const data = await res.json();
+    setFriends(data);
   };
-
 
   return (
-    <div style={{ padding: "20px" }}>
+    <div>
       <h1>👥 Friends</h1>
 
+      
       <h2>Your Friends</h2>
-
       {friends.length === 0 && <p>No friends yet.</p>}
 
       <ul>
         {friends.map((f) => (
-          <li key={f.id} style={{ marginBottom: "8px" }}>
-            {f.email}
-
-            <button
-              onClick={() => removeFriend(f.id)}
-              style={{
-                marginLeft: "10px",
-                cursor: "pointer",
-              }}
+          <li key={f.id}>
+            //clickable names
+            <span
+              style={{ cursor: "pointer", color: "blue" }}
+              onClick={() => navigate(`/profile/${f.id}`)}
             >
-              ❌ Remove
+              {f.email}
+            </span>
+
+            {" "}
+            <button onClick={() => removeFriend(f.id)}>
+              Remove
             </button>
           </li>
         ))}
@@ -120,40 +112,30 @@ function Friends() {
 
       
       <h2>Find Friends</h2>
-
       <input
         placeholder="Search users..."
         value={search}
         onChange={handleSearch}
-        style={{
-          padding: "8px",
-          width: "250px",
-          marginBottom: "10px",
-        }}
       />
 
-      <div>
+      <ul>
         {results.map((u) => (
-          <div
-            key={u.id}
-            style={{
-              border: "1px solid #ccc",
-              padding: "10px",
-              marginTop: "10px",
-              width: "250px",
-            }}
-          >
-            <p>{u.email}</p>
-
-            <button
-              onClick={() => addFriend(u.id)}
-              style={{ cursor: "pointer" }}
+          <li key={u.id}>
+            
+            <span
+              style={{ cursor: "pointer", color: "blue" }}
+              onClick={() => navigate(`/profile/${u.id}`)}
             >
-              ➕ Add Friend
+              {u.email}
+            </span>
+
+            {" "}
+            <button onClick={() => addFriend(u.id)}>
+              Add Friend
             </button>
-          </div>
+          </li>
         ))}
-      </div>
+      </ul>
     </div>
   );
 }

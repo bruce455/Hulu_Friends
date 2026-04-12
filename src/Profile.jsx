@@ -1,22 +1,31 @@
 import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 
 function Profile() {
   const [favorites, setFavorites] = useState([]);
 
+  const { id } = useParams(); //  from /profile/:id
+  const user = JSON.parse(localStorage.getItem("user"));
+
+  const userIdToLoad = id || user?.id;
+
   useEffect(() => {
-    const user = JSON.parse(localStorage.getItem("user"));
+    if (!userIdToLoad) return;
 
-    if (!user) return;
-
-    fetch(`http://localhost:5000/favorites/${user.id}`)
+    fetch(`http://localhost:5000/favorites/${userIdToLoad}`)
       .then((res) => res.json())
       .then((data) => setFavorites(data))
       .catch((err) => console.error(err));
-  }, []);
+  }, [userIdToLoad]);
 
   return (
     <div>
-      <h1>⭐ Your Favorites</h1>
+      
+      <h1>
+        {id ? " Friend's Profile" : " Your Profile"}
+      </h1>
+
+      <h2>⭐ Favorite Movies</h2>
 
       {favorites.length === 0 && <p>No favorites yet.</p>}
 

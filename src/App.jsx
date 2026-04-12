@@ -28,6 +28,7 @@ function App() {
         <Route path="/profile" element={<Profile />} />
         <Route path="/friends" element={<Friends />} />
         <Route path="/movie" element={<MovieDetails />} />
+        <Route path="/profile/:id" element={<Profile />} />
       </Routes>
     </div>
   );
