@@ -92,18 +92,18 @@ function Friends() {
       {friends.length === 0 && <p>No friends yet.</p>}
 
       <ul>
-        {friends.map((f) => (
-          <li key={f.id}>
-            //clickable names
+        {friends.map((u) => (
+          <li key={u.id}>
+            
             <span
               style={{ cursor: "pointer", color: "blue" }}
-              onClick={() => navigate(`/profile/${f.id}`)}
+              onClick={() => navigate(`/profile/${u.id}`)}
             >
-              {f.email}
+              {u.username}
             </span>
 
             {" "}
-            <button onClick={() => removeFriend(f.id)}>
+            <button onClick={() => removeFriend(u.id)}>
               Remove
             </button>
           </li>
@@ -126,7 +126,7 @@ function Friends() {
               style={{ cursor: "pointer", color: "blue" }}
               onClick={() => navigate(`/profile/${u.id}`)}
             >
-              {u.email}
+              {u.username}
             </span>
 
             {" "}

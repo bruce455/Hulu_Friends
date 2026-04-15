@@ -3,12 +3,24 @@ import { useParams } from "react-router-dom";
 
 function Profile() {
   const [favorites, setFavorites] = useState([]);
+  const [profileUser, setProfileUser] = useState(null);
 
-  const { id } = useParams(); //  from /profile/:id
+  const { id } = useParams();
   const user = JSON.parse(localStorage.getItem("user"));
 
   const userIdToLoad = id || user?.id;
 
+  // Get profile user info (username)
+  useEffect(() => {
+    if (!userIdToLoad) return;
+
+    fetch(`http://localhost:5000/users/${userIdToLoad}`)
+      .then((res) => res.json())
+      .then((data) => setProfileUser(data))
+      .catch((err) => console.error(err));
+  }, [userIdToLoad]);
+
+  // Get favorites
   useEffect(() => {
     if (!userIdToLoad) return;
 
@@ -20,9 +32,10 @@ function Profile() {
 
   return (
     <div>
-      
       <h1>
-        {id ? " Friend's Profile" : " Your Profile"}
+        {profileUser
+          ? `${profileUser.username}'s Profile`
+          : "Profile"}
       </h1>
 
       <h2>⭐ Favorite Movies</h2>
