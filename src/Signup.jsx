@@ -1,5 +1,7 @@
 import { useState } from "react";
 import { validation } from "./validation";
+import Button from "react-bootstrap/Button";
+import Form from "react-bootstrap/Form";
 
 function Signup() {
   const [email, setEmail] = useState("");
@@ -8,9 +10,7 @@ function Signup() {
   const handleSignup = async (e) => {
     e.preventDefault();
 
-  
     const error = validation(email, password);
-
     if (error) {
       alert(error);
       return;
@@ -25,27 +25,41 @@ function Signup() {
     });
 
     const data = await res.json();
-    console.log("Data submitted to database: ", data);
+    console.log("Data submitted to database:", data);
   };
 
   return (
-    <form onSubmit={handleSignup}>
-      <input
-        type="email"
-        placeholder="Email"
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-      />
+    <div className="d-flex justify-content-center align-items-center vh-100">
+  <div className="p-4 shadow rounded" style={{ width: "350px" }}>
+    <h2 className="mb-4 text-center">Sign Up</h2>
 
-      <input
-        type="password"
-        placeholder="Password"
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
-      />
+    <Form onSubmit={handleSignup}>
+      <Form.Group className="mb-3">
+        <Form.Label>Email</Form.Label>
+        <Form.Control
+          type="email"
+          placeholder="Enter email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+        />
+      </Form.Group>
 
-      <button type="submit">Sign Up</button>
-    </form>
+      <Form.Group className="mb-3">
+        <Form.Label>Password</Form.Label>
+        <Form.Control
+          type="password"
+          placeholder="Password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+        />
+      </Form.Group>
+
+      <Button type="submit" className="w-100">
+        Sign Up
+      </Button>
+    </Form>
+  </div>
+</div>
   );
 }
 

@@ -60,7 +60,7 @@ function Home() {
         <p>No results found.</p>
       )}
 
-     {/* will change with bootstrap cards */}
+
       <div style={{ display: "flex", flexWrap: "wrap", gap: "10px" }}>
         {movies.map((movie) => (
           <div

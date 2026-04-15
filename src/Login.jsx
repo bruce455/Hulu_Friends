@@ -1,5 +1,7 @@
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
+import Button from "react-bootstrap/Button";
+import Form from "react-bootstrap/Form";
 
 function Login() {
   const [email, setEmail] = useState("");
@@ -26,13 +28,7 @@ function Login() {
       const data = await res.json();
       console.log("Logged in:", data);
 
-     
-      
-
-      // store user
       localStorage.setItem("user", JSON.stringify(data));
-
-      // go home
       navigate("/home");
 
     } catch (err) {
@@ -41,30 +37,41 @@ function Login() {
   };
 
   return (
-    <form onSubmit={handleLogin}>
-      <h1>Login</h1>
+    <div className="d-flex justify-content-center align-items-center vh-100">
+      <div className="p-4 shadow rounded" style={{ width: "350px" }}>
+        <h2 className="mb-4 text-center">Login</h2>
 
-      <input
-        type="email"
-        placeholder="Email"
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-      />
+        <Form onSubmit={handleLogin}>
+          <Form.Group className="mb-3">
+            <Form.Label>Email</Form.Label>
+            <Form.Control
+              type="email"
+              placeholder="Enter email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
+          </Form.Group>
 
-      <input
-        type="password"
-        placeholder="Password"
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
-      />
+          <Form.Group className="mb-3">
+            <Form.Label>Password</Form.Label>
+            <Form.Control
+              type="password"
+              placeholder="Password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
+          </Form.Group>
 
-      <button type="submit">Login</button>
+          <Button type="submit" className="w-100 mb-3">
+            Login
+          </Button>
 
-      
-      <p>
-        Don't have an account? <Link to="/signup">Sign up</Link>
-      </p>
-    </form>
+          <p className="text-center">
+            Don't have an account? <Link to="/signup">Sign up</Link>
+          </p>
+        </Form>
+      </div>
+    </div>
   );
 }
 
