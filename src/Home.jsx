@@ -42,15 +42,19 @@ function Home() {
 
   return (
     <div>
-      <h1>🎬 Movie App</h1>
+      <h1 style={{ textAlign: "center", marginTop: "20px" }}>Trending Movies
+      </h1>
 
       
-      <input
-        type="text"
-        placeholder="Search for a movie..."
-        value={query}
-        onChange={(e) => setQuery(e.target.value)}
-      />
+      <div style={{ display: "flex", justifyContent: "center", margin: "20px 0" }}>
+        <input
+          type="text"
+          placeholder="Search for a movie..."
+          value={query}
+          onChange={(e) => setQuery(e.target.value)}
+          style={{ width: "300px", padding: "8px" }}
+        />
+      </div>
 
    
       {loading && <p>Loading...</p>}
